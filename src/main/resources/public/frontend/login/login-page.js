@@ -45,7 +45,6 @@ loginButton = document.getElementById("login-button");
  * - Use `window.location.href` for redirection
  */
 async function processLogin() {
-/*
     // TODO: Retrieve username and password from input fields
     // - Trim input and validate that neither is empty
     usernameText = usernameInput.innerText.trim();
@@ -109,6 +108,5 @@ async function processLogin() {
         // - Log the error and alert the user
         alert("foobar");
     }
-*/
 }
 

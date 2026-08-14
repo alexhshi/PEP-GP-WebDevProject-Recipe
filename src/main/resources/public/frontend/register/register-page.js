@@ -44,7 +44,6 @@ registerButton = document.getElementById("register-button");
  * - Log error and alert user
  */
 async function processRegistration() {
-/*
     // Implement registration logic here
 
     // Example placeholder:
@@ -74,13 +73,18 @@ async function processRegistration() {
         referrerPolicy: "no-referrer",
         body: JSON.stringify(registerBody)
     };
-    let response = await fetch(new Request("http://localhost:8081/register"), requestOptions);
-    if (response.status == 201) {
-        window.location.href("http://localhost:8081/login");
-    } else if (response.status == 409) {
-        alert("user/email already exists");
-    } else {
-        alert("generic registration error");
+    try {
+        let response = await fetch(new Request("http://localhost:8081/register"), requestOptions);
+        if (response.status == 201) {
+            window.location.href("http://localhost:8081/login");
+        } else if (response.status == 409) {
+            alert("user/email already exists");
+        } else {
+            alert("generic registration error");
+        }
+    } catch(e) {
+        console.log("foobar");
+        alert("foobar error?");
     }
-*/
+
 }
