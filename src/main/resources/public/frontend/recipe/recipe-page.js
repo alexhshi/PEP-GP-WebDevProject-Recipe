@@ -66,7 +66,8 @@ window.addEventListener("DOMContentLoaded", () => {
             headers: {
                 "Content-Type": "application/json",
                 "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Headers": "*"
+                "Access-Control-Allow-Headers": "*",
+                "Authorization": "Bearer " + sessionStorage.getItem("auth-token")
             },
             redirect: "follow",
             referrerPolicy: "no-referrer",
@@ -95,11 +96,13 @@ window.addEventListener("DOMContentLoaded", () => {
             headers: {
                 "Content-Type": "application/json",
                 "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Headers": "*"
+                "Access-Control-Allow-Headers": "*",
+                "Authorization": "Bearer " + sessionStorage.getItem("auth-token")
             },
             redirect: "follow",
             referrerPolicy: "no-referrer",
             body: JSON.stringify({name: recipeAdd.innerText, instructions: recipeAddInstr.innerText})
+            
         };
         try {
             let response = await fetch(new Request(BASE_URL + "/login"), requestOptions);
@@ -127,7 +130,8 @@ window.addEventListener("DOMContentLoaded", () => {
             headers: {
                 "Content-Type": "application/json",
                 "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Headers": "*"
+                "Access-Control-Allow-Headers": "*",
+                "Authorization": "Bearer " + sessionStorage.getItem("auth-token")
             },
             redirect: "follow",
             referrerPolicy: "no-referrer",
