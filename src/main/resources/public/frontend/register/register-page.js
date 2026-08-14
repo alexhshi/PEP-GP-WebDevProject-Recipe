@@ -52,9 +52,12 @@ async function processRegistration() {
     emailText = emailInput.innerHTML;
     pwdText = passwordInput.innerHTML;
     repeatPwdText = repeatPasswordInput.innerHTML;
-    /*if (usernameText.length > 0 && emailText.length > 0 && pwdText.length > 0 && repeatPwdText.length > 0 && pwdText == repeatPwdText) {*/
+    if (usernameText.length > 0 && emailText.length > 0 && pwdText.length > 0 && repeatPwdText.length > 0 && pwdText == repeatPwdText) {*/
         registerBody = {username: usernameText, password: pwdText, email: emailText};
-    //}
+    } else {
+        console.log("foobar");
+        alert("foobar error?");
+    }
     const requestOptions = {
         method: "POST",
         mode: "cors",
@@ -71,8 +74,7 @@ async function processRegistration() {
     };
     let response = await fetch(new Request("http://localhost:8081/register"), requestOptions);
     if (response.status == 201) {
-        //TODO: self, how to do this?
-        return
+        window.location.href("http://localhost:8081/login");
     } else if (response.status == 409) {
         alert("user/email already exists");
     } else {
