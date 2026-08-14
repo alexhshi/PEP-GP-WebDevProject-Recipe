@@ -55,8 +55,9 @@ async function processRegistration() {
     if (usernameText.length > 0 && emailText.length > 0 && pwdText.length > 0 && repeatPwdText.length > 0 && pwdText == repeatPwdText) {
         registerBody = {username: usernameText, password: pwdText, email: emailText};
     } else {
-        console.log("foobar");
-        alert("foobar error?");
+        //console.log("foobar");
+        //alert("foobar error?");
+        return;
     }
     const requestOptions = {
         method: "POST",
