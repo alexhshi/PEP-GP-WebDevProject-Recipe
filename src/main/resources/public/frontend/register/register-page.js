@@ -44,6 +44,7 @@ registerButton = document.getElementById("register-button");
  * - Log error and alert user
  */
 async function processRegistration() {
+/*    
     // Implement registration logic here
 
     // Example placeholder:
@@ -81,4 +82,5 @@ async function processRegistration() {
     } else {
         alert("generic registration error");
     }
+*/
 }
