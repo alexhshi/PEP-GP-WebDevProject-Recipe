@@ -52,12 +52,12 @@ async function processRegistration() {
     emailText = emailInput.innerHTML;
     pwdText = passwordInput.innerHTML;
     repeatPwdText = repeatPasswordInput.innerHTML;
-    if (usernameText.length > 0 && emailText.length > 0 && pwdText.length > 0 && repeatPwdText.length > 0 && pwdText == repeatPwdText) {*/
+    //if (usernameText.length > 0 && emailText.length > 0 && pwdText.length > 0 && repeatPwdText.length > 0 && pwdText == repeatPwdText) {*/
         registerBody = {username: usernameText, password: pwdText, email: emailText};
-    } else {
-        console.log("foobar");
-        alert("foobar error?");
-    }
+    //} else {
+    //    console.log("foobar");
+    //    alert("foobar error?");
+    //}
     const requestOptions = {
         method: "POST",
         mode: "cors",
