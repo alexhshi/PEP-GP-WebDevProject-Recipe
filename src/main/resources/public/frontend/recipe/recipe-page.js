@@ -16,6 +16,14 @@ window.addEventListener("DOMContentLoaded", () => {
      * - Admin link and logout button
      * - Search input
     */
+   recipeAdd = document.getElementById("add-recipe-name-input");
+   recipeAddInstr = document.getElementById("add-recipe-instructions-input")
+   recipeUpdate = document.getElementById("update-recipe-name-input");
+   recipeUpdateInstr = document.getElementById("update-recipe-instructions-input");
+   recipeDelete = document.getElementById("delete-recipe-name-input");
+   recipeListContainer = document.getElementById("recipe-list");
+
+   searchInput = document.getElementById("search-input");
 
     /*
      * TODO: Show logout button if auth-token exists in sessionStorage
@@ -37,7 +45,7 @@ window.addEventListener("DOMContentLoaded", () => {
     /*
      * TODO: On page load, call getRecipes() to populate the list
      */
-
+    //TODO: self, use ngOnInit()?
 
     /**
      * TODO: Search Recipes Function
@@ -48,6 +56,24 @@ window.addEventListener("DOMContentLoaded", () => {
      */
     async function searchRecipes() {
         // Implement search logic here
+        //searchInput.innerText
+
+        const requestOptions = {
+            //method: "POST", //TODO: self, see if this defaults to get or not
+            mode: "cors",
+            cache: "no-cache",
+            credentials: "same-origin",
+            headers: {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Headers": "*"
+            },
+            redirect: "follow",
+            referrerPolicy: "no-referrer",
+            body: JSON.stringify({name: searchInput.innerText})
+            //TODO: self, what is "name query?" is it the url path thing or what?
+        };
+        refreshRecipeList();
     }
 
     /**
@@ -60,6 +86,26 @@ window.addEventListener("DOMContentLoaded", () => {
      */
     async function addRecipe() {
         // Implement add logic here
+        
+        const requestOptions = {
+            method: "POST", 
+            mode: "cors",
+            cache: "no-cache",
+            credentials: "same-origin",
+            headers: {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Headers": "*"
+            },
+            redirect: "follow",
+            referrerPolicy: "no-referrer",
+            body: JSON.stringify({name: recipeAdd.innerText, instructions: recipeAddInstr.innerText})
+        };
+        try {
+            let response = await fetch(new Request(BASE_URL + "/login"), requestOptions);
+        } catch (e) {
+            alert("foobar");
+        }
     }
 
     /**
@@ -71,7 +117,29 @@ window.addEventListener("DOMContentLoaded", () => {
      * - On success: clear inputs, fetch latest recipes, refresh the list
      */
     async function updateRecipe() {
-        // Implement update logic here
+        let theName = recipeUpdate.innerText;
+        let theInstr = recipeUpdateInstr.innerText;
+        const requestOptions = {
+            method: "PUT", 
+            mode: "cors",
+            cache: "no-cache",
+            credentials: "same-origin",
+            headers: {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Headers": "*"
+            },
+            redirect: "follow",
+            referrerPolicy: "no-referrer",
+            body: JSON.stringify({name: theName, instructions: theInstr}) //TODO: self, supposed to be by ID
+        };
+        try {
+            let response = await fetch(new Request(BASE_URL + "/login"), requestOptions);
+        } catch (e) {
+            alert("foobar");
+        }
+        //TODO: self, clear inputs -& fetch latest recipes
+        refreshRecipeList();
     }
 
     /**
