@@ -86,6 +86,7 @@ async function processLogin() {
             words = words.split(" ");
             token = words[0];
             isAdmin = words[1];
+            //alert(token + isAdmin);
             sessionStorage.setItem("auth-token", token);
             sessionStorage.setItem("is-admin", isAdmin);
 
@@ -94,7 +95,8 @@ async function processLogin() {
             // TODO: Add a small delay (e.g., 500ms) using setTimeout before redirecting
             setTimeout(500);
             // - Use window.location.href to redirect to the recipe page
-            window.location.href = "http://recipe/recipe-page.html";
+            //alert(window.location.href);
+            window.location.href = "http://localhost:8083/recipe/recipe-page.html";
         // TODO: If response status is 401
 
         } else if (response.status == 401) {

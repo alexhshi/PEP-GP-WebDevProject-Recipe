@@ -99,8 +99,9 @@ window.addEventListener("DOMContentLoaded", () => {
      */
     async function addRecipe() {
         // Implement add logic here
-        let inputName = recipeAdd.innerText;
-        let inputInstr = recipeAddInstr.innerText;
+        alert("here? (add)");
+        let inputName = recipeAdd.value;
+        let inputInstr = recipeAddInstr.value;
         
         const requestOptions = {
             method: "POST", 
@@ -121,8 +122,8 @@ window.addEventListener("DOMContentLoaded", () => {
         try {
             let response = await fetch(new Request(BASE_URL + "/login"), requestOptions);
             //TODO: self, clear which inputs?
-            recipeAdd.innerHTML = "";
-            recipeAddInstr.innerHTML = "";
+            recipeAdd.value = "";
+            recipeAddInstr.value = "";
             //TODO: self, fetch latest recipes how?
             getRecipes();
             refreshRecipeList();
@@ -140,8 +141,8 @@ window.addEventListener("DOMContentLoaded", () => {
      * - On success: clear inputs, fetch latest recipes, refresh the list
      */
     async function updateRecipe() {
-        let theName = recipeUpdate.innerText;
-        let theInstr = recipeUpdateInstr.innerText;
+        let theName = recipeUpdate.value;
+        let theInstr = recipeUpdateInstr.value;
         if (theName.length <= 0 || theInstr.length <= 0) {
             return;
         }
@@ -175,8 +176,8 @@ window.addEventListener("DOMContentLoaded", () => {
         } catch (e) {
             alert("foobar");
         }
-        recipeUpdate.innerText = "";
-        recipeUpdateInstr.innerText = "";
+        recipeUpdate.value = "";
+        recipeUpdateInstr.value = "";
         getRecipes();
         refreshRecipeList();
     }
@@ -190,7 +191,7 @@ window.addEventListener("DOMContentLoaded", () => {
      */
     async function deleteRecipe() {
         // Implement delete logic here
-        let theName = recipeDelete.innerText;
+        let theName = recipeDelete.value;
         if (theName.length <= 0) {
             return;
         }
@@ -226,7 +227,7 @@ window.addEventListener("DOMContentLoaded", () => {
         } catch (e) {
             alert("foobar");
         }
-        recipeDelete.innerText = "";
+        recipeDelete.value = "";
     }
 
     /**
@@ -237,6 +238,7 @@ window.addEventListener("DOMContentLoaded", () => {
      */
     async function getRecipes() {
         // Implement get logic here
+        alert("Hello?");
         const requestOptions = {
             //method: "POST", //TODO: double check that this defaults to get
             mode: "cors",
@@ -254,10 +256,13 @@ window.addEventListener("DOMContentLoaded", () => {
             
         };
         try {
+            console.log("is this visible???");
+            alert("what about this?");
             let response = await fetch(new Request(BASE_URL + "/recipes"), requestOptions);
             recipesArray = response;
+            alert(recipesArray);
         } catch(e) {
-
+            alert("here");
         }
         refreshRecipeList();
     }

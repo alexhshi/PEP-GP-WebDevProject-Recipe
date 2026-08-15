@@ -14,12 +14,12 @@
 </head>
 
 <body>
-
+    <script>alert("page loaded")</script>
     <!-- TODO: Add a hidden link with id="admin-link" to navigate to the ingredients page (admin only) -->
-    <a href = "http://ingredients/ingredient-page.html" id="admin-link" onload = "showLogout()" hidden>foobar</a>
+    <a href = "http://ingredients/ingredient-page.html" id="admin-link" hidden>foobar</a>
 
     <!-- TODO: Add a hidden Logout button with id="logout-button" -->
-    <button type="button" id="logout-button" onclick = "processLogout()" hidden>foobar</button>
+    <button type="button" id="logout-button" onclick = "processLogout()"onload = "showLogout()" hidden>foobar</button>
 
     <!-- TODO: Add an h1 heading for the Recipe Management section -->
     <h1>Recipes Management</h1>
