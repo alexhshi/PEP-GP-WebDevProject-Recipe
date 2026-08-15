@@ -50,7 +50,8 @@ async function processLogin() {
     // - Trim input and validate that neither is empty
     usernameText = usernameInput.innerText.trim();
     pwdText = pwdInput.innerText.trim();
-    if (usernameText.length <= 0 && pwdText.length <= 0) {
+    if (usernameText.length <= 0 || pwdText.length <= 0) {
+        alert("foobar");
         return;
     }
 
@@ -81,7 +82,8 @@ async function processLogin() {
         // - Split the string into token and isAdmin flag
         // - Store both in sessionStorage using sessionStorage.setItem()
         if (response.status == 200) {
-            words = response.text.split(" ");
+            words = await response.text();
+            words = words.split(" ");
             token = words[0];
             isAdmin = words[1];
             sessionStorage.setItem("auth-token", token);
