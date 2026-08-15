@@ -48,16 +48,17 @@ async function processRegistration() {
 
     // Example placeholder:
     // const registerBody = { username, email, password };
-    usernameText = usernameInput.innerText;
-    emailText = emailInput.innerText;
-    pwdText = passwordInput.innerText;
-    repeatPwdText = repeatPasswordInput.innerText;
+    usernameText = usernameInput.value;
+    emailText = emailInput.value;
+    pwdText = passwordInput.value;
+    repeatPwdText = repeatPasswordInput.value;
     //print(usernameText);
     if (usernameText.length > 0 && emailText.length > 0 && pwdText.length > 0 && repeatPwdText.length > 0 && pwdText == repeatPwdText) {
         registerBody = {username: usernameText, password: pwdText, email: emailText};
     } else {
         console.log("foobar");
-        alert("foobar error?");
+        alert(usernameText + emailText + pwdText + repeatPwdText);
+        //alert("foobar error? 1");
         return;
     }
     const requestOptions = {
@@ -76,8 +77,11 @@ async function processRegistration() {
     };
     try {
         let response = await fetch(new Request("http://localhost:8081/register"), requestOptions);
+        //alert(response.status);
         if (response.status == 201) {
-            window.location.href("login/login-page.html");
+            //alert("got to here");
+            window.location.href = "http://login/login-page.html";
+            alert("now here");
         } else if (response.status == 409) {
             alert("user/email already exists");
         } else {
@@ -85,7 +89,7 @@ async function processRegistration() {
         }
     } catch(e) {
         console.log("foobar");
-        alert("foobar error?");
+        alert("foobar error? 3");
     }
 
 }

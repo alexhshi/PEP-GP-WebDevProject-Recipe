@@ -48,10 +48,10 @@ logoutButton = document.getElementById("logout-button");
 async function processLogin() {
     // TODO: Retrieve username and password from input fields
     // - Trim input and validate that neither is empty
-    usernameText = usernameInput.innerText.trim();
-    pwdText = pwdInput.innerText.trim();
+    usernameText = usernameInput.value.trim();
+    pwdText = pwdInput.value.trim();
     if (usernameText.length <= 0 || pwdText.length <= 0) {
-        alert("foobar");
+        alert(usernameText + pwdText);
         return;
     }
 
@@ -94,7 +94,7 @@ async function processLogin() {
             // TODO: Add a small delay (e.g., 500ms) using setTimeout before redirecting
             setTimeout(500);
             // - Use window.location.href to redirect to the recipe page
-            window.location.href("recipe/recipe-page.html");
+            window.location.href = "http://recipe/recipe-page.html";
         // TODO: If response status is 401
 
         } else if (response.status == 401) {
