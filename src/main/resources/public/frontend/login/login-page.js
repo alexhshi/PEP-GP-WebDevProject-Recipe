@@ -80,7 +80,7 @@ async function processLogin() {
         // - Response will be a space-separated string: "token123 true"
         // - Split the string into token and isAdmin flag
         // - Store both in sessionStorage using sessionStorage.setItem()
-        if (response.status == 201) {
+        if (response.status == 200) {
             words = response.text.split(" ");
             token = words[0];
             isAdmin = words[1];

@@ -48,10 +48,10 @@ async function processRegistration() {
 
     // Example placeholder:
     // const registerBody = { username, email, password };
-    usernameText = usernameInput.innerHTML;
-    emailText = emailInput.innerHTML;
-    pwdText = passwordInput.innerHTML;
-    repeatPwdText = repeatPasswordInput.innerHTML;
+    usernameText = usernameInput.innerText;
+    emailText = emailInput.innerText;
+    pwdText = passwordInput.innerText;
+    repeatPwdText = repeatPasswordInput.innerText;
     if (usernameText.length > 0 && emailText.length > 0 && pwdText.length > 0 && repeatPwdText.length > 0 && pwdText == repeatPwdText) {
         registerBody = {username: usernameText, password: pwdText, email: emailText};
     } else {
