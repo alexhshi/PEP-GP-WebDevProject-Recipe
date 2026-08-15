@@ -30,6 +30,16 @@ window.addEventListener("DOMContentLoaded", () => {
 
    recipesArray;
 
+   let addButton = document.getElementById("add-recipe-submit-input");
+    // add an event listener
+    addButton.addEventListener("click", addRecipe);
+    // define the handler
+    /*
+    function myFunction(event) {
+    // logic that does something in response to the event
+    }
+    */
+
     /*
      * TODO: Show logout button if auth-token exists in sessionStorage
      */
