@@ -20,6 +20,10 @@
 
     <!-- TODO: Add a hidden Logout button with id="logout-button" -->
     <button type="button" id="logout-button" onclick = "processLogout()"onload = "showLogout()" hidden>foobar</button>
+    <script> if (sessionStorage.getItem("auth-token") !== null) {
+        logoutButton.removeAttribute("hidden");
+    }
+    alert("this thing activated? (apparently not)")</script>
 
     <!-- TODO: Add an h1 heading for the Recipe Management section -->
     <h1>Recipes Management</h1>
