@@ -96,7 +96,8 @@ async function processLogin() {
             setTimeout(500);
             // - Use window.location.href to redirect to the recipe page
             //alert(window.location.href);
-            window.location.href = "http://localhost:8083/recipe/recipe-page.html";
+            //window.location.href = "http://localhost:8083/recipe/recipe-page.html";
+            window.location.href = "/recipe/recipe-page.html";
         // TODO: If response status is 401
 
         } else if (response.status == 401) {
