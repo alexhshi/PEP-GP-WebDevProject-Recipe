@@ -76,7 +76,7 @@ async function processRegistration() {
     try {
         let response = await fetch(new Request("http://localhost:8081/register"), requestOptions);
         if (response.status == 201) {
-            window.location.href("http://localhost:8081/login");
+            window.location.href("login/login-page.html");
         } else if (response.status == 409) {
             alert("user/email already exists");
         } else {

@@ -15,6 +15,7 @@ const BASE_URL = "http://localhost:8081"; // backend URL
 usernameInput = document.getElementById("login-input");
 pwdInput = document.getElementById("password-input");
 loginButton = document.getElementById("login-button");
+logoutButton = document.getElementById("logout-button");
 
 
 /* 
@@ -106,6 +107,7 @@ async function processLogin() {
     } catch (error) {
         // TODO: Handle any network or unexpected errors
         // - Log the error and alert the user
+        console.log("foobar");
         alert("foobar");
     }
 }
