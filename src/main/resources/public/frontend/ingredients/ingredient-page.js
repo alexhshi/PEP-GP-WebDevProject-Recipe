@@ -12,6 +12,10 @@ const BASE_URL = "http://localhost:8081"; // backend URL
  * - searchInput (optional for future use)
  * - adminLink (if visible conditionally)
  */
+addIngredientNameInput = document.getElementById("add-ingredient-name-input");
+deleteIngredientNameInput = document.getElementById("delete-ingredient-name-input");
+ingredientListContainer = document.getElementById("ingredient-list");
+
 
 /* 
  * TODO: Attach 'onclick' events to:
@@ -41,6 +45,35 @@ const BASE_URL = "http://localhost:8081"; // backend URL
  */
 async function addIngredient() {
     // Implement add ingredient logic here
+    let input = addIngredientNameInput.innerText.trim();
+    if (input.length <= 0) {
+        return;
+    }
+
+    const requestOptions = {
+        method: "POST",
+        mode: "cors",
+        cache: "no-cache",
+        credentials: "same-origin",
+        headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Headers": "*",
+            "Authorization": "Bearer " + sessionStorage.getItem("auth-token")
+        },
+        redirect: "follow",
+        referrerPolicy: "no-referrer",
+        body: JSON.stringify(registerBody)
+    };
+
+    try {
+        let response = await fetch(new Request(BASE_URL + "/ingredients"), requestOptions);
+        //TODO: self, clear input later
+        getIngredients();
+        refreshIngredientList();
+    } catch (e) {
+        alert("foobar");
+    }
 }
 
 
