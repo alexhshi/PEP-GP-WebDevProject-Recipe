@@ -52,12 +52,13 @@ async function processRegistration() {
     emailText = emailInput.innerText;
     pwdText = passwordInput.innerText;
     repeatPwdText = repeatPasswordInput.innerText;
+    //print(usernameText);
     if (usernameText.length > 0 && emailText.length > 0 && pwdText.length > 0 && repeatPwdText.length > 0 && pwdText == repeatPwdText) {
         registerBody = {username: usernameText, password: pwdText, email: emailText};
     } else {
         console.log("foobar");
         alert("foobar error?");
-        //return;
+        return;
     }
     const requestOptions = {
         method: "POST",
