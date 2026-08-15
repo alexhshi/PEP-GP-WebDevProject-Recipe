@@ -16,8 +16,10 @@
 <body>
 
     <!-- TODO: Add a hidden link with id="admin-link" to navigate to the ingredients page (admin only) -->
+    <a href = "ingredient-page.html" id="admin-link" hidden>foobar</a>
 
     <!-- TODO: Add a hidden Logout button with id="logout-button" -->
+    <button type="button" id="logout-button" onclick = "processLogout()" hidden>foobar</button>
 
     <!-- TODO: Add an h1 heading for the Recipe Management section -->
      <h1>Recipe Management</h1>
@@ -41,7 +43,7 @@
         - Create a <ul> to hold all recipes
         - Give it id="recipe-list"
     -->
-    <ul id="recipe-list">
+    <ul id="recipe-list" onload="getRecipes()">
     </ul>
 
 

@@ -26,6 +26,7 @@ ingredientListContainer = document.getElementById("ingredient-list");
 /*
  * TODO: Create an array to keep track of ingredients
  */
+arrayIngredients;
 
 /* 
  * TODO: On page load, call getIngredients()
@@ -88,6 +89,29 @@ async function addIngredient() {
  */
 async function getIngredients() {
     // Implement get ingredients logic here
+    const requestOptions = {
+        //method: "POST", //TODO: double check that this defaults to get
+        mode: "cors",
+        cache: "no-cache",
+        credentials: "same-origin",
+        headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Headers": "*",
+            "Authorization": "Bearer " + sessionStorage.getItem("auth-token")
+        },
+        redirect: "follow",
+        referrerPolicy: "no-referrer",
+        //body: JSON.stringify({name: inputName, instructions: inputInstr}) //TODO: self, hope this works
+        
+    };
+    try {
+        let response = await fetch(new Request(BASE_URL + "/ingredients"), requestOptions);
+        arrayIngredients = response;
+    } catch(e) {
+        alert("foobar");
+    }
+    refreshIngredientList();
 }
 
 
@@ -104,6 +128,42 @@ async function getIngredients() {
  */
 async function deleteIngredient() {
     // Implement delete ingredient logic here
+    let input = deleteIngredientNameInput.innerText.trim();
+    let theId;
+    for (let i in ingredientListContainer.childNodes) {
+        if (JSON.parse(i.innerText)["name"] == input) {
+            theId = JSON.parse(i.innerText)["id"];
+            //break;
+        }
+    }
+    if (theId == undefined) {
+        alert("foobar");
+        return;
+    }
+
+    const requestOptions = {
+        method: "DELETE", 
+        mode: "cors",
+        cache: "no-cache",
+        credentials: "same-origin",
+        headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Headers": "*",
+            "Authorization": "Bearer " + sessionStorage.getItem("auth-token")
+        },
+        redirect: "follow",
+        referrerPolicy: "no-referrer",
+        //body: JSON.stringify({instructions: theInstr}) //TODO: hope this commenting out works
+    };
+    try {
+        let response = await fetch(new Request(BASE_URL + "/ingredients/" + theId), requestOptions);
+        getIngredients();
+        refreshIngredientList();
+        deleteIngredientNameInput.innerText = "";
+    } catch (e) {
+        alert("foobar");
+    }
 }
 
 
@@ -119,4 +179,8 @@ async function deleteIngredient() {
  */
 function refreshIngredientList() {
     // Implement ingredient list rendering logic here
+    ingredientListContainer.innerHTML = "";
+    for (let i in arrayIngredients) {
+        ingredientListContainer.appendChild("<li><p>" + i + "</p></li>");
+    }
 }

@@ -23,15 +23,25 @@ window.addEventListener("DOMContentLoaded", () => {
    recipeDelete = document.getElementById("delete-recipe-name-input");
    recipeListContainer = document.getElementById("recipe-list");
 
+   logoutButton = document.getElementById("logout-button");
+   adminLink = document.getElementById("admin-link");
+
    searchInput = document.getElementById("search-input");
+
+   recipesArray;
 
     /*
      * TODO: Show logout button if auth-token exists in sessionStorage
      */
-
+    if (sessionStorage.getItem("auth-token") !== null) {
+        logoutButton.removeAttribute("hidden");
+    }
     /*
      * TODO: Show admin link if is-admin flag in sessionStorage is "true"
      */
+    if (sessionStorage.getItem("is-admin") == "true") {
+        adminLink.removeAttribute("hidden");
+    }
 
     /*
      * TODO: Attach event handlers
@@ -45,7 +55,6 @@ window.addEventListener("DOMContentLoaded", () => {
     /*
      * TODO: On page load, call getRecipes() to populate the list
      */
-    //TODO: self, use ngOnInit()?
 
     /**
      * TODO: Search Recipes Function
@@ -56,7 +65,7 @@ window.addEventListener("DOMContentLoaded", () => {
      */
     async function searchRecipes() {
         // Implement search logic here
-        //searchInput.innerText
+        let input = searchInput.innerText
 
         const requestOptions = {
             //method: "POST", //TODO: self, see if this defaults to get or not
@@ -71,7 +80,7 @@ window.addEventListener("DOMContentLoaded", () => {
             },
             redirect: "follow",
             referrerPolicy: "no-referrer",
-            body: JSON.stringify({name: searchInput.innerText})
+            body: JSON.stringify({name: input})
             //TODO: self, what is "name query?" is it the url path thing or what?
         };
         refreshRecipeList();
@@ -87,6 +96,8 @@ window.addEventListener("DOMContentLoaded", () => {
      */
     async function addRecipe() {
         // Implement add logic here
+        let inputName = recipeAdd.innerText;
+        let inputInstr = recipeAddInstr.innerText;
         
         const requestOptions = {
             method: "POST", 
@@ -101,11 +112,17 @@ window.addEventListener("DOMContentLoaded", () => {
             },
             redirect: "follow",
             referrerPolicy: "no-referrer",
-            body: JSON.stringify({name: recipeAdd.innerText, instructions: recipeAddInstr.innerText})
+            body: JSON.stringify({name: inputName, instructions: inputInstr})
             
         };
         try {
             let response = await fetch(new Request(BASE_URL + "/login"), requestOptions);
+            //TODO: self, clear which inputs?
+            recipeAdd.innerHTML = "";
+            recipeAddInstr.innerHTML = "";
+            //TODO: self, fetch latest recipes how?
+            getRecipes();
+            refreshRecipeList();
         } catch (e) {
             alert("foobar");
         }
@@ -122,6 +139,19 @@ window.addEventListener("DOMContentLoaded", () => {
     async function updateRecipe() {
         let theName = recipeUpdate.innerText;
         let theInstr = recipeUpdateInstr.innerText;
+        if (theName.length <= 0 || theInstr.length <= 0) {
+            return;
+        }
+        getRecipes();
+        refreshRecipeList();
+
+        let theId;
+        for (let i in recipesArray) {
+            if (i.name == theName) {
+                theId = i.id;
+            }
+        }
+
         const requestOptions = {
             method: "PUT", 
             mode: "cors",
@@ -135,14 +165,16 @@ window.addEventListener("DOMContentLoaded", () => {
             },
             redirect: "follow",
             referrerPolicy: "no-referrer",
-            body: JSON.stringify({name: theName, instructions: theInstr}) //TODO: self, supposed to be by ID
+            body: JSON.stringify({instructions: theInstr})
         };
         try {
-            let response = await fetch(new Request(BASE_URL + "/login"), requestOptions);
+            let response = await fetch(new Request(BASE_URL + "/recipes/" + theId), requestOptions);
         } catch (e) {
             alert("foobar");
         }
-        //TODO: self, clear inputs -& fetch latest recipes
+        recipeUpdate.innerText = "";
+        recipeUpdateInstr.innerText = "";
+        getRecipes();
         refreshRecipeList();
     }
 
@@ -155,6 +187,43 @@ window.addEventListener("DOMContentLoaded", () => {
      */
     async function deleteRecipe() {
         // Implement delete logic here
+        let theName = recipeDelete.innerText;
+        if (theName.length <= 0) {
+            return;
+        }
+        getRecipes();
+        refreshRecipeList();
+
+        let theId;
+        for (let i in recipesArray) {
+            if (i.name == theName) {
+                theId = i.id;
+            }
+        }
+
+        const requestOptions = {
+            method: "DELETE", 
+            mode: "cors",
+            cache: "no-cache",
+            credentials: "same-origin",
+            headers: {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Headers": "*",
+                "Authorization": "Bearer " + sessionStorage.getItem("auth-token")
+            },
+            redirect: "follow",
+            referrerPolicy: "no-referrer",
+            //body: JSON.stringify({instructions: theInstr}) //TODO: hope this commenting out works
+        };
+        try {
+            let response = await fetch(new Request(BASE_URL + "/recipes/" + theId), requestOptions);
+            getRecipes();
+            refreshRecipeList();
+        } catch (e) {
+            alert("foobar");
+        }
+        recipeDelete.innerText = "";
     }
 
     /**
@@ -165,6 +234,29 @@ window.addEventListener("DOMContentLoaded", () => {
      */
     async function getRecipes() {
         // Implement get logic here
+        const requestOptions = {
+            //method: "POST", //TODO: double check that this defaults to get
+            mode: "cors",
+            cache: "no-cache",
+            credentials: "same-origin",
+            headers: {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Headers": "*",
+                "Authorization": "Bearer " + sessionStorage.getItem("auth-token")
+            },
+            redirect: "follow",
+            referrerPolicy: "no-referrer",
+            //body: JSON.stringify({name: inputName, instructions: inputInstr}) //TODO: self, hope this works
+            
+        };
+        try {
+            let response = await fetch(new Request(BASE_URL + "/recipes"), requestOptions);
+            recipesArray = response;
+        } catch(e) {
+
+        }
+        refreshRecipeList();
     }
 
     /**
@@ -175,6 +267,10 @@ window.addEventListener("DOMContentLoaded", () => {
      */
     function refreshRecipeList() {
         // Implement refresh logic here
+        recipeListContainer.innerHTML = "";
+        for (let i in recipesArray) {
+            recipeListContainer.appendChild("<li>" + i + "</li>");
+        }
     }
 
     /**
@@ -186,6 +282,28 @@ window.addEventListener("DOMContentLoaded", () => {
      */
     async function processLogout() {
         // Implement logout logic here
+        const requestOptions = {
+            method: "POST",
+            mode: "cors",
+            cache: "no-cache",
+            credentials: "same-origin",
+            headers: {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Headers": "*",
+                "Authorization": "Bearer " + sessionStorage.getItem("auth-token")
+            },
+            redirect: "follow",
+            referrerPolicy: "no-referrer",
+            body: JSON.stringify(requestBody)
+        };
+        try {
+            let response = await fetch(new Request(BASE_URL + "/logout"), requestOptions);
+            sessionStorage.clear();
+            window.location.href("login/login-page.html");
+        } catch (e) {
+            alert("foobar");
+        }
     }
 
 });
