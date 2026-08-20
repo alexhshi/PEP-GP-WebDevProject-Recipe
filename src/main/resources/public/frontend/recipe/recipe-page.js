@@ -52,7 +52,7 @@ window.addEventListener("DOMContentLoaded", () => {
     /*
      * TODO: Show admin link if is-admin flag in sessionStorage is "true"
      */
-    if (sessionStorage.getItem("is-admin") == "true") {
+    if (window.sessionStorage.getItem("is-admin") == "true") {
         adminLink.removeAttribute("hidden");
     }
 
