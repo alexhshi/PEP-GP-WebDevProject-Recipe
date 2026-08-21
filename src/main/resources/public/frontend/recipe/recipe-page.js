@@ -43,8 +43,9 @@ window.addEventListener("DOMContentLoaded", () => {
     /*
      * TODO: Show logout button if auth-token exists in sessionStorage
      */
+    
     function showLogout() {
-        if (sessionStorage.getItem("auth-token") !== null) {
+        if (window.sessionStorage.getItem("auth-token") !== null) {
             logoutButton.removeAttribute("hidden");
         }
     }
